@@ -1,0 +1,92 @@
+body{
+    background-image: linear-gradient(to top, #696666, #4e4c4c, #353434, #1e1d1d, #000000);
+    background-repeat: no-repeat;
+    width: 100vw; 
+    height: 100vh;  
+    display: flex;
+    flex-direction: column;
+}
+
+.header{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header img{
+    width: 100px;
+    border-radius: 50%;
+}
+
+.header h1{
+    color: #ffffff;
+}
+
+.icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+.logo{
+    width: 50px;
+}
+
+.whatsapp{
+    width: 42px;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+}
+
+.all_buttons  {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+
+
+.button{
+    display: flex;
+    border-radius: 22px;
+    width: 40vw;
+    text-decoration: none;
+    text-align: center;
+    align-items: center;
+    background-color: #ffffff;
+    gap: 2vw;
+
+}
+
+.button:hover{
+    background-color: transparent;
+    border: #ffffff solid;
+    color: #ffffff;
+}
+
+
+.button img{
+    width: 10%;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 10px;
+}
+
+
+.button{
+    text-decoration: none;
+    color: #989696;
+}
+
+
+
