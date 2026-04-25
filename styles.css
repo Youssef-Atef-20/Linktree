@@ -1,17 +1,29 @@
-body{
-    background-image: linear-gradient(to top, #696666, #4e4c4c, #353434, #1e1d1d, #000000);
-    background-repeat: no-repeat;
-    width: 100vw; 
-    height: 100vh;  
-    display: flex;
-    flex-direction: column;
+/* Reset بسيط */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* Background */
+body{
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to top, #696666, #4e4c4c, #353434, #1e1d1d, #000000);
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
 .header{
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .header img{
@@ -21,16 +33,17 @@ body{
 
 .header h1{
     color: #ffffff;
+    font-size: 22px;
 }
 
+/* Icons */
 .icons{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+    margin-top: 10px;
 }
-
-
 
 .logo{
     width: 50px;
@@ -40,53 +53,74 @@ body{
     width: 42px;
 }
 
+/* Main */
 main{
     display: flex;
     justify-content: center;
 }
 
-.all_buttons  {
-    text-decoration: none;
+/* Buttons Container */
+.all_buttons{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
-
-
+/* Button */
 .button{
     display: flex;
-    border-radius: 22px;
-    width: 40vw;
-    text-decoration: none;
-    text-align: center;
     align-items: center;
-    background-color: #ffffff;
-    gap: 2vw;
+    gap: 18px;
 
+    width: 95%;
+    
+
+    padding: 16% 30px;
+    border-radius: 35px;
+
+    background: #fffffff2;
+    backdrop-filter: blur(5px);
+
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 16px;
+
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px #00000033;
 }
 
+/* Hover effect */
 .button:hover{
-    background-color: transparent;
-    border: #ffffff solid;
-    color: #ffffff;
+    transform: translateY(-3px) scale(1.02);
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+    box-shadow: 0 6px 20px #ffffff33;
 }
 
+/* Click effect */
+.button:active{
+    transform: scale(0.97);
+}
 
+/* Image inside button */
 .button img{
-    width: 10%;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    padding: 10px;
 }
 
+/* Responsive */
+@media (max-width: 600px){
+    .header h1{
+        font-size: 18px;
+    }
 
-.button{
-    text-decoration: none;
-    color: #989696;
+    .button{
+        width: 95%;
+    }
 }
-
-
-
