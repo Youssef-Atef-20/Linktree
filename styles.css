@@ -11,26 +11,26 @@
     --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     --transition-smooth: all 0.3s ease;
 
-    /* Theme Configurations (Obsidian Dark) */
-    --bg-main: #08090c;
-    --text-primary: #f1f2f6;
-    --text-secondary: #8e939e;
+    /* Theme Configurations (Elegant Deep Green) */
+    --bg-main: #163832;
+    --text-primary: #f0f6f4;
+    --text-secondary: #9ab5ac;
     
     /* Glassmorphism */
-    --glass-bg: rgba(15, 16, 22, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.05);
-    --glass-border-hover: rgba(226, 184, 87, 0.25);
-    --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
-    --glass-shadow-hover: 0 20px 50px -10px rgba(226, 184, 87, 0.08);
+    --glass-bg: rgba(14, 38, 33, 0.5);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-border-hover: rgba(226, 184, 87, 0.4);
+    --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.4);
+    --glass-shadow-hover: 0 20px 50px -10px rgba(226, 184, 87, 0.15);
     
     /* Accent & Brand Colors (Muted Gold) */
     --accent: #e2b857;
-    --accent-glow: rgba(226, 184, 87, 0.2);
+    --accent-glow: rgba(226, 184, 87, 0.25);
     
     /* Dynamic Mesh Bubbles */
-    --bubble-1: #19140d; /* Warm dark bronze */
-    --bubble-2: #09090b; /* Dark charcoal */
-    --bubble-3: #0a1411; /* Dark pine green */
+    --bubble-1: #0f2b25;
+    --bubble-2: #1e4f45;
+    --bubble-3: #1a3b30;
     
     /* Inputs */
     --input-bg: rgba(0, 0, 0, 0.25);
@@ -200,10 +200,10 @@ body.loaded .animate-on-load {
     right: -5px;
     bottom: -5px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent) 0%, #ff007f 50%, #9333ea 100%);
+    background: linear-gradient(135deg, var(--accent) 0%, transparent 50%, var(--accent) 100%);
     z-index: 1;
     animation: rotateRing 8s linear infinite;
-    opacity: 0.85;
+    opacity: 0.6;
 }
 
 @keyframes rotateRing {
@@ -281,8 +281,8 @@ body.loaded .animate-on-load {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #22c55e; /* Green active status */
-    box-shadow: 0 0 10px #22c55e;
+    background-color: var(--accent); /* Elegant gold status */
+    box-shadow: 0 0 10px var(--accent-glow);
 }
 
 /* Social Quicklinks removed */
@@ -349,7 +349,7 @@ body.loaded .animate-on-load {
 .bento-card:hover {
     border-color: var(--glass-border-hover);
     box-shadow: var(--glass-shadow-hover);
-    background: rgba(22, 24, 32, 0.7);
+    background: rgba(10, 30, 26, 0.8);
 }
 
 .bento-card:active {
@@ -435,78 +435,7 @@ body.loaded .animate-on-load {
     color: var(--accent);
 }
 
-/* Portfolio Card specific */
-.portfolio-card:hover {
-    border-color: rgba(226, 184, 87, 0.4);
-}
-.portfolio-card:hover .card-icon-wrapper {
-    background: rgba(226, 184, 87, 0.12);
-    border-color: rgba(226, 184, 87, 0.4);
-}
-.portfolio-card:hover .card-icon-wrapper svg {
-    color: var(--accent);
-}
 
-/* BRAND SPECIFIC HOVER HIGHLIGHTS */
-/* LinkedIn */
-.linkedin-card:hover {
-    border-color: rgba(0, 119, 181, 0.35);
-}
-.linkedin-card:hover .card-icon-wrapper {
-    background: rgba(0, 119, 181, 0.1);
-    border-color: rgba(0, 119, 181, 0.3);
-}
-.linkedin-card:hover .card-icon-wrapper svg {
-    color: #0077b5;
-}
-
-/* WhatsApp */
-.whatsapp-card:hover {
-    border-color: rgba(37, 211, 102, 0.35);
-}
-.whatsapp-card:hover .card-icon-wrapper {
-    background: rgba(37, 211, 102, 0.1);
-    border-color: rgba(37, 211, 102, 0.3);
-}
-.whatsapp-card:hover .card-icon-wrapper svg {
-    color: #25d366;
-}
-
-/* Instagram */
-.instagram-card:hover {
-    border-color: rgba(225, 48, 108, 0.35);
-}
-.instagram-card:hover .card-icon-wrapper {
-    background: rgba(225, 48, 108, 0.1);
-    border-color: rgba(225, 48, 108, 0.3);
-}
-.instagram-card:hover .card-icon-wrapper svg {
-    color: #e1306c;
-}
-
-/* Facebook */
-.facebook-card:hover {
-    border-color: rgba(24, 119, 242, 0.35);
-}
-.facebook-card:hover .card-icon-wrapper {
-    background: rgba(24, 119, 242, 0.1);
-    border-color: rgba(24, 119, 242, 0.3);
-}
-.facebook-card:hover .card-icon-wrapper svg {
-    color: #1877f2;
-}
-
-/* Email */
-.email-card:hover {
-    border-color: rgba(226, 184, 87, 0.4);
-}
-.email-card:hover .card-icon-wrapper {
-    background: rgba(226, 184, 87, 0.12);
-    border-color: rgba(226, 184, 87, 0.4);
-}
-.email-card:hover .card-icon-wrapper svg {
-    color: var(--accent);
-}
 
 /* ==========================================================================
    FOOTER
