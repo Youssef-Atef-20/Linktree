@@ -435,24 +435,16 @@ body.loaded .animate-on-load {
     color: var(--accent);
 }
 
-/* Clock Card specific */
-.clock-card {
-    cursor: default;
+/* Portfolio Card specific */
+.portfolio-card:hover {
+    border-color: rgba(226, 184, 87, 0.4);
 }
-.clock-card #clock-time {
-    font-variant-numeric: tabular-nums;
+.portfolio-card:hover .card-icon-wrapper {
+    background: rgba(226, 184, 87, 0.12);
+    border-color: rgba(226, 184, 87, 0.4);
+}
+.portfolio-card:hover .card-icon-wrapper svg {
     color: var(--accent);
-    letter-spacing: 0.02em;
-}
-.clock-card:hover .card-icon-wrapper {
-    transform: translateZ(30px) scale(1.08) rotate(-3deg);
-}
-.clock-card:hover .card-icon-wrapper svg {
-    animation: pulseClock 2s infinite ease-in-out;
-}
-@keyframes pulseClock {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(0.92); }
 }
 
 /* BRAND SPECIFIC HOVER HIGHLIGHTS */

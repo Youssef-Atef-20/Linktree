@@ -20,34 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         yearSpan.textContent = new Date().getFullYear();
     }
 
-    // --- CAIRO LIVE CLOCK WIDGET ---
-    function updateClock() {
-        const clockSpan = document.getElementById('clock-time');
-        if (!clockSpan) return;
-        
-        const now = new Date();
-        const options = {
-            timeZone: 'Africa/Cairo',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: true
-        };
-        
-        try {
-            const cairoTimeStr = now.toLocaleTimeString('en-US', options);
-            clockSpan.textContent = cairoTimeStr;
-        } catch (e) {
-            // Fallback if timeZone isn't supported
-            const hours = String(now.getHours() % 12 || 12).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
-            clockSpan.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
-        }
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
+
 
     // --- INTERACTIVE MOUSE TRACKING BACKGROUND ---
     const meshBg = document.querySelector('.bg-mesh');
