@@ -1,19 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- STAGGER LOAD ANIMATIONS ---
-    const animatedElements = document.querySelectorAll('.animate-on-load');
-    animatedElements.forEach((el, index) => {
-        el.style.animationDelay = `${index * 80}ms`;
-    });
-    // Add loaded class to trigger animations
-    setTimeout(() => {
-        document.body.classList.add('loaded');
-    }, 100);
+    // --- GSAP INTRO TIMELINE ---
+    const introTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    
+    // Set initial states to avoid flash of content
+    gsap.set('.avatar-container', { scale: 0.7, opacity: 0, rotate: -15 });
+    gsap.set('.profile-info > *', { y: 25, opacity: 0 });
+    gsap.set('.bento-card', { y: 45, opacity: 0, rotateX: 12 });
+    gsap.set('.profile-footer', { y: 15, opacity: 0 });
+    
+    introTl
+        .to('.avatar-container', { scale: 1, opacity: 1, rotate: 0, duration: 1.2, ease: 'elastic.out(1, 0.6)' })
+        .to('.profile-info > *', { y: 0, opacity: 1, duration: 0.8, stagger: 0.12 }, '-=0.8')
+        .to('.bento-card', { y: 0, opacity: 1, rotateX: 0, duration: 0.8, stagger: 0.08, transformPerspective: 1000 }, '-=0.6')
+        .to('.profile-footer', { y: 0, opacity: 1, duration: 0.8 }, '-=0.4');
 
     // --- CURRENT YEAR FOR FOOTER ---
     const yearSpan = document.getElementById('current-year');
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
+
+    // --- CAIRO LIVE CLOCK WIDGET ---
+    function updateClock() {
+        const clockSpan = document.getElementById('clock-time');
+        if (!clockSpan) return;
+        
+        const now = new Date();
+        const options = {
+            timeZone: 'Africa/Cairo',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        };
+        
+        try {
+            const cairoTimeStr = now.toLocaleTimeString('en-US', options);
+            clockSpan.textContent = cairoTimeStr;
+        } catch (e) {
+            // Fallback if timeZone isn't supported
+            const hours = String(now.getHours() % 12 || 12).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+            clockSpan.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+        }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 
     // --- INTERACTIVE MOUSE TRACKING BACKGROUND ---
     const meshBg = document.querySelector('.bg-mesh');
@@ -26,6 +60,84 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- GSAP MAGNETIC AVATAR EFFECT ---
+    const avatarContainer = document.querySelector('.avatar-container');
+    if (avatarContainer) {
+        avatarContainer.addEventListener('mousemove', (e) => {
+            const rect = avatarContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left - (rect.width / 2);
+            const y = e.clientY - rect.top - (rect.height / 2);
+            
+            gsap.to(avatarContainer, {
+                x: x * 0.35,
+                y: y * 0.35,
+                rotateX: -y * 0.1,
+                rotateY: x * 0.1,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        });
+        
+        avatarContainer.addEventListener('mouseleave', () => {
+            gsap.to(avatarContainer, {
+                x: 0,
+                y: 0,
+                rotateX: 0,
+                rotateY: 0,
+                duration: 0.6,
+                ease: 'elastic.out(1, 0.4)'
+            });
+        });
+    }
+
+    // --- GSAP 3D CARD TILT & PARALLAX HOVER ---
+    const cards = document.querySelectorAll('.bento-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const normalizeX = (x / rect.width) - 0.5;
+            const normalizeY = (y / rect.height) - 0.5;
+            
+            card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+            card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+            
+            gsap.to(card, {
+                rotateY: normalizeX * 15,
+                rotateX: -normalizeY * 15,
+                transformPerspective: 1000,
+                ease: 'power2.out',
+                duration: 0.3
+            });
+            
+            const icon = card.querySelector('.card-icon-wrapper');
+            const content = card.querySelector('.card-content');
+            const arrow = card.querySelector('.card-arrow');
+            
+            if (icon) gsap.to(icon, { x: normalizeX * 8, y: normalizeY * 8, z: 20, duration: 0.3, ease: 'power2.out' });
+            if (content) gsap.to(content, { x: normalizeX * 5, y: normalizeY * 5, z: 12, duration: 0.3, ease: 'power2.out' });
+            if (arrow) gsap.to(arrow, { x: normalizeX * 7, y: normalizeY * 7, z: 18, duration: 0.3, ease: 'power2.out' });
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            gsap.to(card, {
+                rotateY: 0,
+                rotateX: 0,
+                ease: 'power3.out',
+                duration: 0.5
+            });
+            
+            const icon = card.querySelector('.card-icon-wrapper');
+            const content = card.querySelector('.card-content');
+            const arrow = card.querySelector('.card-arrow');
+            
+            if (icon) gsap.to(icon, { x: 0, y: 0, z: 0, duration: 0.5, ease: 'power3.out' });
+            if (content) gsap.to(content, { x: 0, y: 0, z: 0, duration: 0.5, ease: 'power3.out' });
+            if (arrow) gsap.to(arrow, { x: 0, y: 0, z: 0, duration: 0.5, ease: 'power3.out' });
+        });
+    });
 
     // --- TYPEWRITER EFFECT ---
     const typingSpan = document.getElementById('typing-text');
@@ -38,10 +150,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let roleIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    let typingDelay = 150; // Constant typing speed
-    let erasingDelay = 75;  // Constant erasing speed
-    let newTextDelay = 2500; // Pause at the end of word
-    let nextWordDelay = 600; // Pause before typing next word
+    let typingDelay = 120;
+    let erasingDelay = 60;
+    let newTextDelay = 2200;
+    let nextWordDelay = 500;
 
     function type() {
         if (!typingSpan) return;
@@ -69,11 +181,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(type, delay);
     }
-    // Start typing
-    setTimeout(type, 1000);
+    setTimeout(type, 1200);
 
     // --- WEB AUDIO SYNTHESIZED SOUND EFFECTS ---
-    const soundEnabled = true; // Always enabled by default
+    const soundEnabled = true;
     let audioCtx = null;
 
     function initAudioContext() {
@@ -85,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Synthesize Mechanical Hover Tick
     function triggerHapticTick() {
         if (!soundEnabled) return;
         initAudioContext();
@@ -97,14 +207,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         osc.type = 'sine';
         osc.frequency.setValueAtTime(1400, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.015, audioCtx.currentTime); // very subtle
+        gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.03);
 
         osc.start();
         osc.stop(audioCtx.currentTime + 0.03);
     }
 
-    // Synthesize Mechanical Click Pop
     function triggerHapticPop() {
         if (!soundEnabled) return;
         initAudioContext();
@@ -124,8 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         osc.stop(audioCtx.currentTime + 0.08);
     }
 
-    // Attach sound events to all interactive elements
-    const clickables = document.querySelectorAll('a, .link-card');
+    const clickables = document.querySelectorAll('a, .bento-card');
     clickables.forEach(item => {
         item.addEventListener('mouseenter', () => {
             triggerHapticTick();

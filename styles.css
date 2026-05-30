@@ -4,32 +4,33 @@
 :root {
     /* Fonts */
     --font-primary: 'Plus Jakarta Sans', sans-serif;
+    --font-display: 'Syne', sans-serif;
     
     /* Layout */
-    --max-width: 480px;
+    --max-width: 580px;
     --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     --transition-smooth: all 0.3s ease;
 
-    /* Theme Configurations (Locked to Dark) */
-    --bg-main: #0a0b10;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
+    /* Theme Configurations (Obsidian Dark) */
+    --bg-main: #08090c;
+    --text-primary: #f1f2f6;
+    --text-secondary: #8e939e;
     
     /* Glassmorphism */
-    --glass-bg: rgba(15, 23, 42, 0.45);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-border-hover: rgba(255, 255, 255, 0.2);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    --glass-shadow-hover: 0 12px 40px 0 rgba(56, 189, 248, 0.15);
+    --glass-bg: rgba(15, 16, 22, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --glass-border-hover: rgba(226, 184, 87, 0.25);
+    --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+    --glass-shadow-hover: 0 20px 50px -10px rgba(226, 184, 87, 0.08);
     
-    /* Accent & Brand Colors */
-    --accent: #38bdf8;
-    --accent-glow: rgba(56, 189, 248, 0.3);
+    /* Accent & Brand Colors (Muted Gold) */
+    --accent: #e2b857;
+    --accent-glow: rgba(226, 184, 87, 0.2);
     
     /* Dynamic Mesh Bubbles */
-    --bubble-1: #1e1b4b;
-    --bubble-2: #311042;
-    --bubble-3: #083344;
+    --bubble-1: #19140d; /* Warm dark bronze */
+    --bubble-2: #09090b; /* Dark charcoal */
+    --bubble-3: #0a1411; /* Dark pine green */
     
     /* Inputs */
     --input-bg: rgba(0, 0, 0, 0.25);
@@ -58,6 +59,19 @@ body {
     overflow-x: hidden;
     position: relative;
     transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
 /* ==========================================================================
@@ -207,9 +221,10 @@ body.loaded .animate-on-load {
 }
 
 .profile-name {
-    font-size: 1.75rem;
-    font-weight: 800;
-    letter-spacing: -0.025em;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 850;
+    letter-spacing: -0.03em;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -275,62 +290,70 @@ body.loaded .animate-on-load {
 /* ==========================================================================
    LINKS CONTAINER & CARDS
    ========================================================================== */
-.links-container {
+.bento-grid {
     width: 100%;
     max-width: var(--max-width);
-    display: flex;
-    flex-direction: column;
-    gap: 1.15rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+    perspective: 1000px;
 }
 
 /* Base Card Style */
-.link-card {
+.bento-card {
     display: flex;
     align-items: center;
-    padding: 1.15rem 1.35rem;
-    border-radius: 20px;
+    padding: 1.25rem 1.45rem;
+    border-radius: 24px;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     text-decoration: none;
     color: var(--text-primary);
     box-shadow: var(--glass-shadow);
-    transition: var(--transition-spring);
+    transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
 }
 
-/* Sweep/Shine Hover Light Beam */
-.link-card::before {
+.bento-wide {
+    grid-column: span 2;
+}
+
+/* Card Tilt/Hover Interactive Highlight Spot */
+.bento-card::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -150%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.13) 50%,
-        rgba(255, 255, 255, 0) 100%
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        250px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(226, 184, 87, 0.08),
+        transparent 80%
     );
-    transform: skewX(-25deg);
-    transition: 0.75s;
+    z-index: 1;
     pointer-events: none;
-    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
-.link-card:hover::before {
-    left: 200%;
+.bento-card:hover::before {
+    opacity: 1;
 }
 
-.link-card:hover {
-    transform: translateY(-4px) scale(1.015);
+.bento-card:hover {
     border-color: var(--glass-border-hover);
     box-shadow: var(--glass-shadow-hover);
+    background: rgba(22, 24, 32, 0.7);
 }
 
-.link-card:active {
-    transform: translateY(-1px) scale(0.99);
+.bento-card:active {
+    transform: scale(0.985);
 }
 
 /* Card Icons */
@@ -338,7 +361,7 @@ body.loaded .animate-on-load {
     width: 48px;
     height: 48px;
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--glass-border);
     display: flex;
     align-items: center;
@@ -346,10 +369,7 @@ body.loaded .animate-on-load {
     margin-right: 1.15rem;
     transition: var(--transition-spring);
     flex-shrink: 0;
-}
-
-html[data-theme="light"] .card-icon-wrapper {
-    background: rgba(0, 0, 0, 0.03);
+    transform: translateZ(20px);
 }
 
 .card-icon-wrapper svg {
@@ -359,8 +379,14 @@ html[data-theme="light"] .card-icon-wrapper {
     transition: var(--transition-spring);
 }
 
-.link-card:hover .card-icon-wrapper {
-    transform: scale(1.1) rotate(5deg);
+.bento-card:hover .card-icon-wrapper {
+    transform: translateZ(30px) scale(1.08) rotate(3deg);
+    background: rgba(226, 184, 87, 0.1);
+    border-color: rgba(226, 184, 87, 0.3);
+}
+
+.bento-card:hover .card-icon-wrapper svg {
+    color: var(--accent);
 }
 
 /* Card Typography */
@@ -369,10 +395,12 @@ html[data-theme="light"] .card-icon-wrapper {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    transform: translateZ(15px);
 }
 
 .card-title {
-    font-size: 1.05rem;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: -0.01em;
 }
@@ -381,7 +409,7 @@ html[data-theme="light"] .card-icon-wrapper {
     font-size: 0.85rem;
     color: var(--text-secondary);
     font-weight: 500;
-    line-height: 1.25;
+    line-height: 1.3;
 }
 
 /* Card Arrow Icon */
@@ -390,9 +418,10 @@ html[data-theme="light"] .card-icon-wrapper {
     align-items: center;
     justify-content: center;
     color: var(--text-secondary);
-    opacity: 0.6;
+    opacity: 0.5;
     transition: var(--transition-spring);
     margin-left: 0.5rem;
+    transform: translateZ(25px);
 }
 
 .card-arrow svg {
@@ -400,20 +429,40 @@ html[data-theme="light"] .card-icon-wrapper {
     height: 18px;
 }
 
-.link-card:hover .card-arrow {
-    transform: translate(3px, -3px);
+.bento-card:hover .card-arrow {
+    transform: translateZ(30px) translate(3px, -3px);
     opacity: 1;
     color: var(--accent);
+}
+
+/* Clock Card specific */
+.clock-card {
+    cursor: default;
+}
+.clock-card #clock-time {
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+}
+.clock-card:hover .card-icon-wrapper {
+    transform: translateZ(30px) scale(1.08) rotate(-3deg);
+}
+.clock-card:hover .card-icon-wrapper svg {
+    animation: pulseClock 2s infinite ease-in-out;
+}
+@keyframes pulseClock {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.92); }
 }
 
 /* BRAND SPECIFIC HOVER HIGHLIGHTS */
 /* LinkedIn */
 .linkedin-card:hover {
-    border-color: rgba(0, 119, 181, 0.4);
-    box-shadow: 0 10px 30px rgba(0, 119, 181, 0.15);
+    border-color: rgba(0, 119, 181, 0.35);
 }
 .linkedin-card:hover .card-icon-wrapper {
-    background: rgba(0, 119, 181, 0.15);
+    background: rgba(0, 119, 181, 0.1);
+    border-color: rgba(0, 119, 181, 0.3);
 }
 .linkedin-card:hover .card-icon-wrapper svg {
     color: #0077b5;
@@ -421,11 +470,11 @@ html[data-theme="light"] .card-icon-wrapper {
 
 /* WhatsApp */
 .whatsapp-card:hover {
-    border-color: rgba(37, 211, 102, 0.4);
-    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.15);
+    border-color: rgba(37, 211, 102, 0.35);
 }
 .whatsapp-card:hover .card-icon-wrapper {
-    background: rgba(37, 211, 102, 0.15);
+    background: rgba(37, 211, 102, 0.1);
+    border-color: rgba(37, 211, 102, 0.3);
 }
 .whatsapp-card:hover .card-icon-wrapper svg {
     color: #25d366;
@@ -433,11 +482,11 @@ html[data-theme="light"] .card-icon-wrapper {
 
 /* Instagram */
 .instagram-card:hover {
-    border-color: rgba(225, 48, 108, 0.4);
-    box-shadow: 0 10px 30px rgba(225, 48, 108, 0.15);
+    border-color: rgba(225, 48, 108, 0.35);
 }
 .instagram-card:hover .card-icon-wrapper {
-    background: rgba(225, 48, 108, 0.15);
+    background: rgba(225, 48, 108, 0.1);
+    border-color: rgba(225, 48, 108, 0.3);
 }
 .instagram-card:hover .card-icon-wrapper svg {
     color: #e1306c;
@@ -445,11 +494,11 @@ html[data-theme="light"] .card-icon-wrapper {
 
 /* Facebook */
 .facebook-card:hover {
-    border-color: rgba(24, 119, 242, 0.4);
-    box-shadow: 0 10px 30px rgba(24, 119, 242, 0.15);
+    border-color: rgba(24, 119, 242, 0.35);
 }
 .facebook-card:hover .card-icon-wrapper {
-    background: rgba(24, 119, 242, 0.15);
+    background: rgba(24, 119, 242, 0.1);
+    border-color: rgba(24, 119, 242, 0.3);
 }
 .facebook-card:hover .card-icon-wrapper svg {
     color: #1877f2;
@@ -457,14 +506,14 @@ html[data-theme="light"] .card-icon-wrapper {
 
 /* Email */
 .email-card:hover {
-    border-color: rgba(139, 92, 246, 0.4);
-    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15);
+    border-color: rgba(226, 184, 87, 0.4);
 }
 .email-card:hover .card-icon-wrapper {
-    background: rgba(139, 92, 246, 0.15);
+    background: rgba(226, 184, 87, 0.12);
+    border-color: rgba(226, 184, 87, 0.4);
 }
 .email-card:hover .card-icon-wrapper svg {
-    color: #8b5cf6;
+    color: var(--accent);
 }
 
 /* ==========================================================================
@@ -491,24 +540,28 @@ html[data-theme="light"] .card-icon-wrapper {
     }
     
     .profile-header {
-        margin-top: 3.5rem;
+        margin-top: 2.5rem;
         margin-bottom: 2rem;
     }
     
     .profile-name {
-        font-size: 1.5rem;
+        font-size: 1.65rem;
+    }
+
+    .bento-grid {
+        gap: 0.75rem;
     }
     
-    .link-card {
+    .bento-card {
         padding: 1rem 1.15rem;
-        border-radius: 16px;
+        border-radius: 18px;
     }
     
     .card-icon-wrapper {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        margin-right: 0.85rem;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        margin-right: 0.75rem;
     }
     
     .card-icon-wrapper svg {
@@ -521,7 +574,16 @@ html[data-theme="light"] .card-icon-wrapper {
     }
     
     .card-description {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .bento-grid {
+        grid-template-columns: 1fr;
+    }
+    .bento-wide {
+        grid-column: span 1;
     }
 }
 
@@ -530,9 +592,8 @@ html[data-theme="light"] .card-icon-wrapper {
     .mesh-bubble,
     .avatar-ring,
     .status-dot,
-    .animate-on-load,
-    .link-card::before,
-    .link-card,
+    .bento-card::before,
+    .bento-card,
     .card-arrow {
         animation: none !important;
         transition: none !important;
