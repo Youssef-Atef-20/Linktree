@@ -1,39 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linktree</title>
+    
+    <!-- SEO & Metadata -->
+    <title>Youssef Atef | Connect With Me</title>
+    <meta name="description" content="Official Linktree for Youssef Atef. Connect on LinkedIn, WhatsApp, Instagram, Facebook, or send an Email.">
+    <meta name="keywords" content="Youssef Atef, Portfolio, Linktree, Web Developer, Social Links">
+    <meta name="author" content="Youssef Atef">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Youssef Atef | Connect With Me">
+    <meta property="og:description" content="Official Linktree for Youssef Atef. Connect on LinkedIn, WhatsApp, Instagram, Facebook, or send an Email.">
+    <meta property="og:image" content="second.jpg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Start Head -->
-    <header>
-        <div class="header">
-           <img src="second.jpg" alt="Youssef Atef Picture">
-        <h1>Youssef Atef</h1> 
+    <!-- Animated Particle/Mesh Background -->
+    <div class="bg-mesh">
+        <div class="mesh-bubble bubble-1"></div>
+        <div class="mesh-bubble bubble-2"></div>
+        <div class="mesh-bubble bubble-3"></div>
+    </div>
+
+
+    <!-- Header Section -->
+    <header class="profile-header">
+        <div class="avatar-container animate-on-load">
+            <img src="second.jpg" alt="Youssef Atef Profile" class="avatar">
+            <div class="avatar-ring"></div>
         </div>
-        <div class="icons">
-            <a href="https://www.linkedin.com/in/youssefatef20"><img src="Black_LinkedIn_Icon-removebg-preview.png" alt="LinkedIn Picture" class="logo linkedin"></a> 
-            <a href="https://wa.me/qr/VZCPTO7S4LQMH1"><img src="WhatsApp_icon-removebg-preview.png" alt="whatsapp Icon" class="logo whatsapp"></a> 
-            <a href="mailto:hh3928850@gmail.com"><img src="black_mail_app_icon__-removebg-preview.png" alt="mail Icon"class="logo mail" ></a> 
+
+        <div class="profile-info animate-on-load">
+            <h1 class="profile-name">
+                Youssef Atef 
+                <span class="verified-badge" title="Verified Account">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="badge-icon"><path d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-13 5l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                </span>
+            </h1>
+            
+            <p class="profile-tagline"><span id="typing-text"></span><span class="typing-cursor">|</span></p>
+
+            <span class="status-badge">
+                <span class="status-dot animate-pulse"></span>
+                Available for Projects
+            </span>
         </div>
 
     </header>
-    <!-- End Head -->
-    <!-- Start Main -->
-   <main>
-    <div class="all_buttons">
-    <a href="https://www.facebook.com/share/1Axd8oAuQU/" class="button">
-        <img src="first.webp" alt="facebook profile picture">
-        Facebook
-    </a>
-    <a href="https://www.instagram.com/yousefatef23?igsh=MXZhYmN2dGlmeWFycw==" class="button">
-        <img src="second.jpg" alt="instagram profile picture">
-        Instagram
-    </a> 
-    </div>
-   </main>
-    <!-- end Main -->
+
+    <!-- Main Navigation/Buttons Section -->
+    <main class="links-container">
+        <!-- LinkedIn Link Card -->
+        <a href="https://www.linkedin.com/in/youssefatef20" target="_blank" rel="noopener noreferrer" class="link-card linkedin-card animate-on-load">
+            <div class="card-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </div>
+            <div class="card-content">
+                <h2 class="card-title">LinkedIn</h2>
+                <p class="card-description">Professional connections & portfolio work</p>
+            </div>
+            <div class="card-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+        </a>
+
+        <!-- WhatsApp Link Card -->
+        <a href="https://wa.me/qr/VZCPTO7S4LQMH1" target="_blank" rel="noopener noreferrer" class="link-card whatsapp-card animate-on-load">
+            <div class="card-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </div>
+            <div class="card-content">
+                <h2 class="card-title">WhatsApp</h2>
+                <p class="card-description">Chat with me directly</p>
+            </div>
+            <div class="card-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+        </a>
+
+        <!-- Instagram Link Card -->
+        <a href="https://www.instagram.com/yousefatef23?igsh=MXZhYmN2dGlmeWFycw==" target="_blank" rel="noopener noreferrer" class="link-card instagram-card animate-on-load">
+            <div class="card-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </div>
+            <div class="card-content">
+                <h2 class="card-title">Instagram</h2>
+                <p class="card-description">Visual stories & creative feed</p>
+            </div>
+            <div class="card-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+        </a>
+
+        <!-- Facebook Link Card -->
+        <a href="https://www.facebook.com/share/1Axd8oAuQU/" target="_blank" rel="noopener noreferrer" class="link-card facebook-card animate-on-load">
+            <div class="card-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </div>
+            <div class="card-content">
+                <h2 class="card-title">Facebook</h2>
+                <p class="card-description">Personal profile & community</p>
+            </div>
+            <div class="card-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+        </a>
+
+        <!-- Email Link Card -->
+        <a href="mailto:hh3928850@gmail.com" class="link-card email-card animate-on-load">
+            <div class="card-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            <div class="card-content">
+                <h2 class="card-title">Email Me</h2>
+                <p class="card-description">Business inquiry & collaborations</p>
+            </div>
+            <div class="card-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </div>
+        </a>
+    </main>
+
+    <!-- Footer -->
+    <footer class="profile-footer animate-on-load">
+        <p>© <span id="current-year"></span> Youssef Atef. Crafted with 💖</p>
+    </footer>
+
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
 </body>
 </html>

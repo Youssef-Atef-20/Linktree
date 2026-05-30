@@ -1,101 +1,542 @@
-/* Reset */
-*{
+/* ==========================================================================
+   DESIGN SYSTEM & CUSTOM PROPERTIES
+   ========================================================================== */
+:root {
+    /* Fonts */
+    --font-primary: 'Plus Jakarta Sans', sans-serif;
+    
+    /* Layout */
+    --max-width: 480px;
+    --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --transition-smooth: all 0.3s ease;
+
+    /* Theme Configurations (Locked to Dark) */
+    --bg-main: #0a0b10;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    
+    /* Glassmorphism */
+    --glass-bg: rgba(15, 23, 42, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-border-hover: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glass-shadow-hover: 0 12px 40px 0 rgba(56, 189, 248, 0.15);
+    
+    /* Accent & Brand Colors */
+    --accent: #38bdf8;
+    --accent-glow: rgba(56, 189, 248, 0.3);
+    
+    /* Dynamic Mesh Bubbles */
+    --bubble-1: #1e1b4b;
+    --bubble-2: #311042;
+    --bubble-3: #083344;
+    
+    /* Inputs */
+    --input-bg: rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================================================
+   BASE RESET & LAYOUT
+   ========================================================================== */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* Background */
-body{
-    width: 100%;
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(to top, #696666, #4e4c4c, #353434, #1e1d1d, #000000);
-    font-family: Arial, sans-serif;
-}
-
-/* Header */
-.header{
-    display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 5%;
+    justify-content: flex-start;
+    padding: 2rem 1rem;
+    overflow-x: hidden;
+    position: relative;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-.header img{
-    width: 25%;
-    max-width: 150px;
+/* ==========================================================================
+   DYNAMIC MESH BACKGROUND
+   ========================================================================== */
+.bg-mesh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.03) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.mesh-bubble {
+    position: absolute;
     border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.55;
+    mix-blend-mode: screen;
+    animation: floatAround 25s infinite alternate ease-in-out;
+    transition: background-color 0.8s ease;
 }
 
-.header h1{
-    color: #ffffff;
-    font-size: 1.5rem;
+.bubble-1 {
+    width: 450px;
+    height: 450px;
+    background-color: var(--bubble-1);
+    top: -10%;
+    left: -10%;
 }
 
-/* Icons */
-.icons{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 3%;
+.bubble-2 {
+    width: 500px;
+    height: 500px;
+    background-color: var(--bubble-2);
+    bottom: -15%;
+    right: -10%;
+    animation-delay: -5s;
+    animation-duration: 30s;
 }
 
-.logo,
-.whatsapp{
-    width: 40px;
+.bubble-3 {
+    width: 350px;
+    height: 350px;
+    background-color: var(--bubble-3);
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: -10s;
+    animation-duration: 20s;
 }
 
-/* Buttons Container */
-.all_buttons{
+@keyframes floatAround {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+    33% {
+        transform: translate(50px, 80px) scale(1.1) rotate(120deg);
+    }
+    66% {
+        transform: translate(-40px, 40px) scale(0.9) rotate(240deg);
+    }
+    100% {
+        transform: translate(0, 0) scale(1) rotate(360deg);
+    }
+}
+
+/* ==========================================================================
+   ANIMATE ON LOAD SYSTEM
+   ========================================================================== */
+.animate-on-load {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.loaded .animate-on-load {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Floating header controls removed */
+
+/* ==========================================================================
+   PROFILE HEADER
+   ========================================================================== */
+.profile-header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    margin-top: 2%;
+    text-align: center;
+    margin-top: 4rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+    max-width: var(--max-width);
+}
+
+/* Avatar Picture & Glowing Ring */
+.avatar-container {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 1.25rem;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--bg-main);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    position: relative;
+}
+
+.avatar-ring {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, #ff007f 50%, #9333ea 100%);
+    z-index: 1;
+    animation: rotateRing 8s linear infinite;
+    opacity: 0.85;
+}
+
+@keyframes rotateRing {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Profile Info */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
     width: 100%;
 }
 
-/* Button */
-.button{
+.profile-name {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
+}
 
-    width: 90%;
-    max-width: 400px;
+.verified-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+}
 
-    padding: 12px 16px;
-    border-radius: 30px;
+.badge-icon {
+    width: 20px;
+    height: 20px;
+    filter: drop-shadow(0 2px 4px var(--accent-glow));
+}
 
-    background: #fffffff2;
-    backdrop-filter: blur(5px);
+.profile-tagline {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    min-height: 20px;
+}
 
-    text-decoration: none;
-    color: #333;
+.typing-cursor {
+    animation: blinkCursor 0.8s infinite;
+    color: var(--accent);
+    font-weight: 700;
+    margin-left: 2px;
+}
+
+@keyframes blinkCursor {
+    50% { opacity: 0; }
+}
+
+/* Status Indicator Badge */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    font-size: 0.8rem;
     font-weight: 600;
-    font-size: 1rem;
-
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    color: var(--text-primary);
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* Hover */
-.button:hover{
-    transform: translateY(-3px) scale(1.02);
-    background: transparent;
-    color: #fff;
-    border: 2px solid #fff;
-}
-
-/* Image */
-.button img{
-    width: 40px;
-    height: 40px;
+.status-dot {
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    object-fit: cover;
+    background-color: #22c55e; /* Green active status */
+    box-shadow: 0 0 10px #22c55e;
+}
+
+/* Social Quicklinks removed */
+
+/* ==========================================================================
+   LINKS CONTAINER & CARDS
+   ========================================================================== */
+.links-container {
+    width: 100%;
+    max-width: var(--max-width);
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+/* Base Card Style */
+.link-card {
+    display: flex;
+    align-items: center;
+    padding: 1.15rem 1.35rem;
+    border-radius: 20px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    text-decoration: none;
+    color: var(--text-primary);
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition-spring);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Sweep/Shine Hover Light Beam */
+.link-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.13) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    transition: 0.75s;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.link-card:hover::before {
+    left: 200%;
+}
+
+.link-card:hover {
+    transform: translateY(-4px) scale(1.015);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glass-shadow-hover);
+}
+
+.link-card:active {
+    transform: translateY(-1px) scale(0.99);
+}
+
+/* Card Icons */
+.card-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.15rem;
+    transition: var(--transition-spring);
+    flex-shrink: 0;
+}
+
+html[data-theme="light"] .card-icon-wrapper {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.card-icon-wrapper svg {
+    width: 22px;
+    height: 22px;
+    color: var(--text-primary);
+    transition: var(--transition-spring);
+}
+
+.link-card:hover .card-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Card Typography */
+.card-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.card-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+/* Card Arrow Icon */
+.card-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    opacity: 0.6;
+    transition: var(--transition-spring);
+    margin-left: 0.5rem;
+}
+
+.card-arrow svg {
+    width: 18px;
+    height: 18px;
+}
+
+.link-card:hover .card-arrow {
+    transform: translate(3px, -3px);
+    opacity: 1;
+    color: var(--accent);
+}
+
+/* BRAND SPECIFIC HOVER HIGHLIGHTS */
+/* LinkedIn */
+.linkedin-card:hover {
+    border-color: rgba(0, 119, 181, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 119, 181, 0.15);
+}
+.linkedin-card:hover .card-icon-wrapper {
+    background: rgba(0, 119, 181, 0.15);
+}
+.linkedin-card:hover .card-icon-wrapper svg {
+    color: #0077b5;
+}
+
+/* WhatsApp */
+.whatsapp-card:hover {
+    border-color: rgba(37, 211, 102, 0.4);
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.15);
+}
+.whatsapp-card:hover .card-icon-wrapper {
+    background: rgba(37, 211, 102, 0.15);
+}
+.whatsapp-card:hover .card-icon-wrapper svg {
+    color: #25d366;
+}
+
+/* Instagram */
+.instagram-card:hover {
+    border-color: rgba(225, 48, 108, 0.4);
+    box-shadow: 0 10px 30px rgba(225, 48, 108, 0.15);
+}
+.instagram-card:hover .card-icon-wrapper {
+    background: rgba(225, 48, 108, 0.15);
+}
+.instagram-card:hover .card-icon-wrapper svg {
+    color: #e1306c;
+}
+
+/* Facebook */
+.facebook-card:hover {
+    border-color: rgba(24, 119, 242, 0.4);
+    box-shadow: 0 10px 30px rgba(24, 119, 242, 0.15);
+}
+.facebook-card:hover .card-icon-wrapper {
+    background: rgba(24, 119, 242, 0.15);
+}
+.facebook-card:hover .card-icon-wrapper svg {
+    color: #1877f2;
+}
+
+/* Email */
+.email-card:hover {
+    border-color: rgba(139, 92, 246, 0.4);
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15);
+}
+.email-card:hover .card-icon-wrapper {
+    background: rgba(139, 92, 246, 0.15);
+}
+.email-card:hover .card-icon-wrapper svg {
+    color: #8b5cf6;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.profile-footer {
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* Toast and share modal CSS removed */
+
+/* ==========================================================================
+   MOBILE & ACCESSIBILITY RESPONSIVENESS
+   ========================================================================== */
+@media (max-width: 480px) {
+    body {
+        padding: 1.5rem 0.75rem;
+    }
+    
+    .profile-header {
+        margin-top: 3.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .profile-name {
+        font-size: 1.5rem;
+    }
+    
+    .link-card {
+        padding: 1rem 1.15rem;
+        border-radius: 16px;
+    }
+    
+    .card-icon-wrapper {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        margin-right: 0.85rem;
+    }
+    
+    .card-icon-wrapper svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .card-title {
+        font-size: 0.95rem;
+    }
+    
+    .card-description {
+        font-size: 0.8rem;
+    }
+}
+
+/* High contrast modes or animation reduction preference */
+@media (prefers-reduced-motion: reduce) {
+    .mesh-bubble,
+    .avatar-ring,
+    .status-dot,
+    .animate-on-load,
+    .link-card::before,
+    .link-card,
+    .card-arrow {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
 }
